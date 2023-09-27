@@ -1,5 +1,3 @@
-
-
 import { CLIApplication, HelpCommand, VersionCommand, ImportCommand } from './index.js';
 
 function bootstrap() {

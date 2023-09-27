@@ -1,11 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { FileReader } from './file-reader.interface.js';
-import { Offer } from '../../types/offer.type.js';
-import { City } from '../../types/city.enum.js';
-import { HousingType } from '../../types/housing-type.enum.js';
-import { ConveniencesType } from '../../types/conveniences-type.enum.js';
-import { UserType } from '../../types/user-type.enum.js';
-import { Coordinates } from '../../types/coordinates.type.js';
+import {
+  Offer,
+  City,
+  HousingType,
+  GoodsType,
+  UserType,
+  Location,
+} from '../../types/index.js';
 
 export class TSVFileReader implements FileReader {
   private rawData = '';
@@ -31,45 +33,49 @@ export class TSVFileReader implements FileReader {
           description,
           createdDate,
           city,
-          preview,
-          photos,
+          previewImage,
+          images,
           isPremium,
           isFavorite,
           rating,
-          housingType,
-          roomsNumber,
-          guestsNumber,
-          rentalPrice,
-          conveniences,
-          firstName,
+          type,
+          bedrooms,
+          maxAdults,
+          price,
+          goods,
+          name,
           email,
-          avatarPath,
+          avatarUrl,
           userType,
-          coordinates,
+          location,
         ]) => ({
           title,
           description,
           postDate: new Date(createdDate),
           city: city as City,
-          preview,
-          photos: photos.split(';'),
+          previewImage,
+          images: images.split(';'),
           isPremium: Boolean(isPremium),
           isFavorite: Boolean(isFavorite),
           rating: Number(rating),
-          housingType: housingType as HousingType,
-          roomsNumber: Number(roomsNumber),
-          guestsNumber: Number(guestsNumber),
-          rentalPrice: Number(rentalPrice),
-          conveniences: conveniences.split(';') as ConveniencesType[],
-          author: {
-            firstName,
+          type: type as HousingType,
+          bedrooms: Number(bedrooms),
+          maxAdults: Number(maxAdults),
+          price: Number(price),
+          goods: goods.split(';') as GoodsType[],
+          host: {
+            name,
             email,
-            avatarPath,
+            avatarUrl,
             type: userType as UserType,
           },
-          coordinates: coordinates
-            .split(';')
-            .map((coordinate) => Number(coordinate)) as Coordinates,
+          location: location.split(';').reduce<Location>(
+            (acc, coordinate, index) => {
+              acc[index ? 'longitude' : 'latitude'] = Number(coordinate);
+              return acc;
+            },
+            { longitude: 0, latitude: 0 }
+          ),
         })
       );
   }
