@@ -1,0 +1,93 @@
+{
+  "api": {
+    "titles": [
+      "Двухместный номер с 1 кроватью",
+      "Хостел Капсульный хостел CapsLock",
+      "Апартаменты с джакузи",
+      "Отель эконом-класса Союз",
+      "Комфортная квартира с шикарным видом"
+    ],
+    "descriptions": [
+      "Комплекс изолированных номеров с индивидуальными удобствами в паре минут ходьбы от ст. метро, что позволяет быстро добраться до центра и большинства достопримечательностей. Просим обратить внимание, что студии не оборудованы плитами и телевизорами.",
+      "Комфортабельная капсула с телевизором, подсветкой, регулировкой вентиляции, светом для чтения.",
+      "Наша концепция - спокойный отдых. Апартаменты сдаются исключительно для 2-х человек. Для шумных посиделок наши апартаменты, к сожалению, не подходят.",
+      "Сдаем посуточно большую 2к квартиру рядом с озером Кабан, с прямым выходом со двора к туристическим прогулочным улицам Каюма Насыри и Марджани, туристам, гостям города или командировочным. В пешей доступности самые интересные достопримечательности города. Рядом музеи, театры, кафе, рестораны.",
+      "Самый большой плюс, это конечно же панорамный вид на город. В ясную погоду Вы можете видеть Волгу и Верхний Услон, вечерами лицезреть волшебные закаты. Балкон оборудован креслами для отдыха в теплое время года."
+    ],
+    "cities": [
+      "Paris",
+      "Cologne",
+      "Brussels",
+      "Amsterdam",
+      "Hamburg",
+      "Dusseldorf"
+    ],
+    "previewImages": [
+      "Double-Room-with-1-bed.jpg",
+      "Multi-seat-Mixed-Single-capsule.png",
+      "Apartment-with-Jacuzzi.jpg",
+      "Soyuz-Economy-Class-Hotel.jpg",
+      "A-comfortable-apartment-with-a-gorgeous-view.png"
+    ],
+    "images": [
+      "kitchen-with-refrigerator.jpg",
+      "spacious-hall.jpg",
+      "View-from-the-window.png",
+      "light-shower-room.png",
+      "Double-bed.jpg",
+      "Triple-bed.png",
+      "jacuzzi.jpg",
+      "wall-clock.jpg",
+      "underfloor-heating.jpg",
+      "quiet-entrance.png",
+      "Loggia.png",
+      "Balcony.png"
+    ],
+    "types": [
+      "apartment",
+      "house",
+      "room",
+      "hotel"
+    ],
+    "goods": [
+      "Breakfast",
+      "Air conditioning",
+      "Laptop friendly workspace",
+      "Baby seat",
+      "Washer",
+      "Towels",
+      "Fridge"
+    ],
+    "users": [
+      "Иван",
+      "Олег",
+      "Пьер",
+      "Роланд",
+      "Холи",
+      "Джек",
+      "Антон",
+      "Борис",
+      "Рокки",
+      "Джон"
+    ],
+    "emails": [
+      "snow@pisem.local",
+      "president@dka.local",
+      "fish@big.local",
+      "test@pisem.local",
+      "freedom@pisem.local",
+      "rolan@pochta.local",
+      "author@mir.local",
+      "test@lost.loca",
+      "kujo-fan@story.local"
+    ],
+    "avatars": [
+      "user.jpg",
+      "photo.jpg",
+      "awesome-avatar.jpg",
+      "roland.jpg",
+      "smite.jpg",
+      "coffee.jpg"
+    ]
+  }
+}
