@@ -6,9 +6,19 @@ export function generateRandomValue(
   return +(Math.random() * (max - min) + min).toFixed(numAfterDigit);
 }
 
-export function getRandomItems<T>(items: T[]): T[] {
-  const startPosition = generateRandomValue(0, items.length - 1);
-  const endPosition = generateRandomValue(startPosition, items.length);
+export function shuffleItems<T>(items: T[]): T[] {
+  return items.toSorted(() => Math.random() - 0.5);
+}
+
+export function getRandomItems<T>(items: T[], count = 0): T[] {
+  if (items.length < count) {
+    throw new Error('Parameter "count" is less than the length of the array');
+  }
+
+  items = shuffleItems(items);
+
+  const startPosition = generateRandomValue(0, items.length - 1 - count);
+  const endPosition = count || generateRandomValue(startPosition, items.length);
 
   return items.slice(startPosition, endPosition);
 }
