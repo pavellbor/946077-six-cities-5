@@ -18,11 +18,17 @@ export function getRandomItems<T>(items: T[], count = 0): T[] {
   items = shuffleItems(items);
 
   const startPosition = generateRandomValue(0, items.length - 1 - count);
-  const endPosition = count ? (startPosition + count) : generateRandomValue(startPosition + 1, items.length);
+  const endPosition = count
+    ? startPosition + count
+    : generateRandomValue(startPosition + 1, items.length);
 
   return items.slice(startPosition, endPosition);
 }
 
 export function getRandomItem<T>(items: T[]): T {
   return items[generateRandomValue(0, items.length - 1)];
+}
+
+export function getErrorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : "";
 }
