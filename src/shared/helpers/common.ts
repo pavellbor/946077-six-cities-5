@@ -7,7 +7,7 @@ export function generateRandomValue(
 }
 
 export function shuffleItems<T>(items: T[]): T[] {
-  return items.toSorted(() => Math.random() - 0.5);
+  return [...items].sort(() => Math.random() - 0.5);
 }
 
 export function getRandomItems<T>(items: T[], count = 0): T[] {
@@ -18,7 +18,7 @@ export function getRandomItems<T>(items: T[], count = 0): T[] {
   items = shuffleItems(items);
 
   const startPosition = generateRandomValue(0, items.length - 1 - count);
-  const endPosition = count || generateRandomValue(startPosition, items.length);
+  const endPosition = count ? (startPosition + count) : generateRandomValue(startPosition + 1, items.length);
 
   return items.slice(startPosition, endPosition);
 }

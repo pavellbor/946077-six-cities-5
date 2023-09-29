@@ -1,4 +1,4 @@
-import { CLIApplication, HelpCommand, VersionCommand, ImportCommand, GenerateCommand } from './index.js';
+import { CLIApplication, HelpCommand, VersionCommand, ImportCommand, GenerateCommand } from './cli/index.js';
 
 function bootstrap() {
   const cliApplication = new CLIApplication();
