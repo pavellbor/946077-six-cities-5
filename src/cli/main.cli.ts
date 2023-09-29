@@ -1,4 +1,4 @@
-import { CLIApplication, HelpCommand, VersionCommand, ImportCommand } from './index.js';
+import { CLIApplication, HelpCommand, VersionCommand, ImportCommand, GenerateCommand } from './index.js';
 
 function bootstrap() {
   const cliApplication = new CLIApplication();
@@ -6,6 +6,7 @@ function bootstrap() {
     new VersionCommand(),
     new HelpCommand(),
     new ImportCommand(),
+    new GenerateCommand(),
   ]);
 
   cliApplication.processCommand(process.argv);
