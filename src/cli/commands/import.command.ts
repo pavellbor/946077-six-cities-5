@@ -1,10 +1,10 @@
-import { createOffer, getErrorMessage } from "../../shared/helpers/index.js";
-import { TSVFileReader } from "../../shared/libs/file-reader/index.js";
-import { Command } from "./command.interface.js";
+import { createOffer, getErrorMessage } from '../../shared/helpers/index.js';
+import { TSVFileReader } from '../../shared/libs/file-reader/index.js';
+import { Command } from './command.interface.js';
 
 export class ImportCommand implements Command {
   public getName(): string {
-    return "--import";
+    return '--import';
   }
 
   private onImportedLine(line: string) {
@@ -20,8 +20,8 @@ export class ImportCommand implements Command {
     const [filename] = parameters;
     const fileReader = new TSVFileReader(filename.trim());
 
-    fileReader.on("line", this.onImportedLine);
-    fileReader.on("end", this.onCompleteImport);
+    fileReader.on('line', this.onImportedLine);
+    fileReader.on('end', this.onCompleteImport);
 
     try {
       await fileReader.read();

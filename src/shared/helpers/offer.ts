@@ -5,7 +5,7 @@ import {
   Location,
   Offer,
   UserType,
-} from "../types/index.js";
+} from '../types/index.js';
 
 export function createOffer(offerData: string): Offer {
   const [
@@ -28,7 +28,7 @@ export function createOffer(offerData: string): Offer {
     avatarUrl,
     userType,
     location,
-  ] = offerData.replace("\n", "").split("\t");
+  ] = offerData.replace('\n', '').split('\t');
 
   return {
     title,
@@ -36,7 +36,7 @@ export function createOffer(offerData: string): Offer {
     postDate: new Date(createdDate),
     city: city as City,
     previewImage,
-    images: images.split(";"),
+    images: images.split(';'),
     isPremium: Boolean(isPremium),
     isFavorite: Boolean(isFavorite),
     rating: Number(rating),
@@ -44,16 +44,16 @@ export function createOffer(offerData: string): Offer {
     bedrooms: Number(bedrooms),
     maxAdults: Number(maxAdults),
     price: Number(price),
-    goods: goods.split(";") as GoodsType[],
+    goods: goods.split(';') as GoodsType[],
     host: {
       name,
       email,
       avatarUrl,
       type: userType as UserType,
     },
-    location: location.split(";").reduce<Location>(
+    location: location.split(';').reduce<Location>(
       (acc, coordinate, index) => {
-        acc[index ? "longitude" : "latitude"] = Number(coordinate);
+        acc[index ? 'longitude' : 'latitude'] = Number(coordinate);
         return acc;
       },
       { longitude: 0, latitude: 0 }

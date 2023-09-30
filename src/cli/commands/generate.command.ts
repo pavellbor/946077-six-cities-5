@@ -1,9 +1,9 @@
-import got from "got";
-import { MockServerData } from "../../shared/types/index.js";
-import { Command } from "./command.interface.js";
-import { TSVOfferGenerator } from "../../shared/libs/offer-generator/index.js";
-import { TSVFileWriter } from "../../shared/libs/file-writer/index.js";
-import { getErrorMessage } from "../../shared/helpers/common.js";
+import got from 'got';
+import { MockServerData } from '../../shared/types/index.js';
+import { Command } from './command.interface.js';
+import { TSVOfferGenerator } from '../../shared/libs/offer-generator/index.js';
+import { TSVFileWriter } from '../../shared/libs/file-writer/index.js';
+import { getErrorMessage } from '../../shared/helpers/common.js';
 
 export class GenerateCommand implements Command {
   private initialData: MockServerData;
@@ -18,15 +18,15 @@ export class GenerateCommand implements Command {
 
   private async write(filepath: string, offerCount: number) {
     const tsvOfferGenerator = new TSVOfferGenerator(this.initialData);
-    const tsvFileWriter = new TSVFileWriter(filepath)
+    const tsvFileWriter = new TSVFileWriter(filepath);
 
     for (let i = 0; i < offerCount; i++) {
-      await tsvFileWriter.write(tsvOfferGenerator.generate())
+      await tsvFileWriter.write(tsvOfferGenerator.generate());
     }
   }
 
   public getName(): string {
-    return "--generate";
+    return '--generate';
   }
 
   public async execute(...parameters: string[]): Promise<void> {
@@ -36,10 +36,10 @@ export class GenerateCommand implements Command {
     try {
       await this.load(url);
       await this.write(filepath, offerCount);
-      console.info(`File ${filepath} was created!`)
+      console.info(`File ${filepath} was created!`);
     } catch (error: unknown) {
-      console.error("Can't generate data");
-      console.error(getErrorMessage(error))
+      console.error('Can\'t generate data');
+      console.error(getErrorMessage(error));
     }
   }
 }

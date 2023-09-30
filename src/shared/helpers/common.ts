@@ -30,5 +30,5 @@ export function getRandomItem<T>(items: T[]): T {
 }
 
 export function getErrorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : "";
+  return error instanceof Error ? error.message : '';
 }

@@ -1,13 +1,13 @@
-import { WriteStream, createWriteStream } from "node:fs";
-import { FileWriter } from "./file-writer.interface.js";
+import { WriteStream, createWriteStream } from 'node:fs';
+import { FileWriter } from './file-writer.interface.js';
 
 export class TSVFileWriter implements FileWriter {
   private stream: WriteStream;
 
   constructor(filename: string) {
     this.stream = createWriteStream(filename, {
-      flags: "w",
-      encoding: "utf-8",
+      flags: 'w',
+      encoding: 'utf-8',
       autoClose: true,
     });
   }
@@ -16,7 +16,7 @@ export class TSVFileWriter implements FileWriter {
     const writeSuccess = this.stream.write(`${row}\n`);
     if (!writeSuccess) {
       return new Promise((resolve) => {
-        this.stream.once("drain", () => resolve(true));
+        this.stream.once('drain', () => resolve(true));
       });
     }
 

@@ -1,11 +1,11 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 import {
   generateRandomValue,
   getRandomItem,
   getRandomItems,
-} from "../../helpers/index.js";
-import { MockServerData } from "../../types/index.js";
-import { OfferGenerator } from "./offer-generator.interface.js";
+} from '../../helpers/index.js';
+import { MockServerData } from '../../types/index.js';
+import { OfferGenerator } from './offer-generator.interface.js';
 
 const IMAGES_COUNT = 6;
 
@@ -44,7 +44,7 @@ export class TSVOfferGenerator implements OfferGenerator {
     const description = getRandomItem(this.mockData.descriptions);
     const city = getRandomItem(this.mockData.cities);
     const previewImage = getRandomItem(this.mockData.previewImages);
-    const images = getRandomItems(this.mockData.images, IMAGES_COUNT).join(";");
+    const images = getRandomItems(this.mockData.images, IMAGES_COUNT).join(';');
     const isPremium = getRandomItem([TRUE_VALUE, FALSE_VALUE]);
     const isFavorite = getRandomItem([TRUE_VALUE, FALSE_VALUE]);
     const rating = generateRandomValue(
@@ -59,7 +59,7 @@ export class TSVOfferGenerator implements OfferGenerator {
     );
     const maxAdults = generateRandomValue(MIN_ADULTS_COUNT, MAX_ADULTS_COUNT);
     const price = generateRandomValue(MIN_PRICE, MAX_PRICE);
-    const goods = getRandomItems(this.mockData.goods).join(";");
+    const goods = getRandomItems(this.mockData.goods).join(';');
     const user = getRandomItem(this.mockData.users);
     const avatarUrl = getRandomItem(this.mockData.avatars);
     const email = getRandomItem(this.mockData.emails);
@@ -73,10 +73,10 @@ export class TSVOfferGenerator implements OfferGenerator {
       MAX_LONGITUDE,
       LOCATION_NUMS_AFTER_DIGIT
     );
-    const location = [latitude, longitude].join(";");
+    const location = [latitude, longitude].join(';');
 
     const postDate = dayjs()
-      .subtract(generateRandomValue(FIRST_WEEK_DAY, LAST_WEEK_DAY), "day")
+      .subtract(generateRandomValue(FIRST_WEEK_DAY, LAST_WEEK_DAY), 'day')
       .toISOString();
 
     return [
@@ -99,6 +99,6 @@ export class TSVOfferGenerator implements OfferGenerator {
       avatarUrl,
       email,
       location,
-    ].join("\t");
+    ].join('\t');
   }
 }
