@@ -1,8 +1,18 @@
+import { getModelForClass, prop } from "@typegoose/typegoose";
 import { User, UserType } from "../../types/index.js";
 
 export class UserEntity implements User {
-  public name: string = '';
-  public avatarUrl: string = '';
-  public email: string = '';
+  @prop({ required: true, minlength: 1, maxlength: 15 })
+  public name: string = "";
+
+  @prop({ required: false, default: "" })
+  public avatarUrl: string = "";
+
+  @prop({ unique: true, required: true })
+  public email: string = "";
+
+  @prop({ required: true })
   public type: UserType = UserType.Standart;
 }
+
+export const UserModel = getModelForClass(UserEntity);
