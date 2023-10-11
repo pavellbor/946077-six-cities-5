@@ -20,6 +20,6 @@ export class CreateOfferDto {
   public maxAdults: number;
   public price: number;
   public goods: GoodsType[];
-  public host: string;
+  public hostId: string;
   public location: Location;
 }

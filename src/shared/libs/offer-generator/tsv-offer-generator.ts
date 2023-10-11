@@ -4,7 +4,7 @@ import {
   getRandomItem,
   getRandomItems,
 } from '../../helpers/index.js';
-import { MockServerData } from '../../types/index.js';
+import { MockServerData, UserType } from '../../types/index.js';
 import { OfferGenerator } from './offer-generator.interface.js';
 
 const IMAGES_COUNT = 6;
@@ -63,6 +63,7 @@ export class TSVOfferGenerator implements OfferGenerator {
     const user = getRandomItem(this.mockData.users);
     const avatarUrl = getRandomItem(this.mockData.avatars);
     const email = getRandomItem(this.mockData.emails);
+    const userType = getRandomItem(Object.values(UserType))
     const latitude = generateRandomValue(
       MIN_LATITUDE,
       MAX_LATITUDE,
@@ -97,7 +98,7 @@ export class TSVOfferGenerator implements OfferGenerator {
       user,
       email,
       avatarUrl,
-      email,
+      userType,
       location,
     ].join('\t');
   }
