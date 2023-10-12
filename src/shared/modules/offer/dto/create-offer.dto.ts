@@ -3,7 +3,7 @@ import {
   GoodsType,
   HousingType,
   Location,
-} from "../../../types/index.js";
+} from '../../../types/index.js';
 
 export class CreateOfferDto {
   public title: string;

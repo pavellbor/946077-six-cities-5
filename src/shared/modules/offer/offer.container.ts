@@ -1,8 +1,8 @@
-import { Container } from "inversify";
-import { OfferService } from "./offer-service.interface.js";
-import { Component } from "../../types/component.enum.js";
-import { DefaultOfferService, OfferEntity, OfferModel } from "./index.js";
-import { types } from "@typegoose/typegoose";
+import { Container } from 'inversify';
+import { OfferService } from './offer-service.interface.js';
+import { Component } from '../../types/component.enum.js';
+import { DefaultOfferService, OfferEntity, OfferModel } from './index.js';
+import { types } from '@typegoose/typegoose';
 
 export function createOfferContainer() {
   const offerContainer = new Container();

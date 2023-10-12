@@ -63,7 +63,7 @@ export class TSVOfferGenerator implements OfferGenerator {
     const user = getRandomItem(this.mockData.users);
     const avatarUrl = getRandomItem(this.mockData.avatars);
     const email = getRandomItem(this.mockData.emails);
-    const userType = getRandomItem(Object.values(UserType))
+    const userType = getRandomItem(Object.values(UserType));
     const latitude = generateRandomValue(
       MIN_LATITUDE,
       MAX_LATITUDE,

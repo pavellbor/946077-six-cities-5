@@ -1,9 +1,9 @@
-import { DocumentType, types } from "@typegoose/typegoose";
-import { CreateUserDto, UserEntity } from "./index.js";
-import { UserService } from "./user-service.interface.js";
-import { inject, injectable } from "inversify";
-import { Component } from "../../types/component.enum.js";
-import { Logger } from "../../libs/logger/index.js";
+import { DocumentType, types } from '@typegoose/typegoose';
+import { CreateUserDto, UserEntity } from './index.js';
+import { UserService } from './user-service.interface.js';
+import { inject, injectable } from 'inversify';
+import { Component } from '../../types/component.enum.js';
+import { Logger } from '../../libs/logger/index.js';
 
 @injectable()
 export class DefaultUserService implements UserService {

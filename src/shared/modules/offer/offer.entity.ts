@@ -4,15 +4,15 @@ import {
   getModelForClass,
   modelOptions,
   prop,
-} from "@typegoose/typegoose";
-import { City, GoodsType, HousingType, Location } from "../../types/index.js";
-import { UserEntity } from "../user/index.js";
+} from '@typegoose/typegoose';
+import { City, GoodsType, HousingType, Location } from '../../types/index.js';
+import { UserEntity } from '../user/index.js';
 
 export interface OfferEntity extends defaultClasses.Base {}
 
 @modelOptions({
   schemaOptions: {
-    collection: "offers",
+    collection: 'offers',
   },
 })
 export class OfferEntity extends defaultClasses.TimeStamps {

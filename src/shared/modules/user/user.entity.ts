@@ -3,22 +3,22 @@ import {
   getModelForClass,
   modelOptions,
   prop,
-} from "@typegoose/typegoose";
-import { User, UserType } from "../../types/index.js";
-import { createSHA256 } from "../../helpers/index.js";
+} from '@typegoose/typegoose';
+import { User, UserType } from '../../types/index.js';
+import { createSHA256 } from '../../helpers/index.js';
 
 export interface UserEntity extends defaultClasses.Base {}
 
 @modelOptions({
   schemaOptions: {
-    collection: "users",
+    collection: 'users',
   },
 })
 export class UserEntity extends defaultClasses.TimeStamps implements User {
   @prop({ required: true, minlength: 1, maxlength: 15 })
   public name: string;
 
-  @prop({ required: false, default: "" })
+  @prop({ required: false, default: '' })
   public avatarUrl: string;
 
   @prop({ unique: true, required: true })

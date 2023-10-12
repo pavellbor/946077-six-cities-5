@@ -2,26 +2,26 @@ import {
   createOffer,
   getErrorMessage,
   getMongoURI,
-} from "../../shared/helpers/index.js";
+} from '../../shared/helpers/index.js';
 import {
   DatabaseClient,
   MongoDatabaseClient,
-} from "../../shared/libs/database-client/index.js";
-import { TSVFileReader } from "../../shared/libs/file-reader/index.js";
-import { ConsoleLogger, Logger } from "../../shared/libs/logger/index.js";
+} from '../../shared/libs/database-client/index.js';
+import { TSVFileReader } from '../../shared/libs/file-reader/index.js';
+import { ConsoleLogger, Logger } from '../../shared/libs/logger/index.js';
 import {
   DefaultOfferService,
   OfferModel,
   OfferService,
-} from "../../shared/modules/offer/index.js";
+} from '../../shared/modules/offer/index.js';
 import {
   DefaultUserService,
   UserModel,
   UserService,
-} from "../../shared/modules/user/index.js";
-import { Offer } from "../../shared/types/index.js";
-import { DEFAULT_DB_PORT, DEFAULT_USER_PASSWORD } from "./command.constant.js";
-import { Command } from "./command.interface.js";
+} from '../../shared/modules/user/index.js';
+import { Offer } from '../../shared/types/index.js';
+import { DEFAULT_DB_PORT, DEFAULT_USER_PASSWORD } from './command.constant.js';
+import { Command } from './command.interface.js';
 
 export class ImportCommand implements Command {
   private userService: UserService;
@@ -81,7 +81,7 @@ export class ImportCommand implements Command {
   }
 
   public getName(): string {
-    return "--import";
+    return '--import';
   }
 
   public async execute(
@@ -99,8 +99,8 @@ export class ImportCommand implements Command {
 
     const fileReader = new TSVFileReader(filename.trim());
 
-    fileReader.on("line", this.onImportedLine);
-    fileReader.on("end", this.onCompleteImport);
+    fileReader.on('line', this.onImportedLine);
+    fileReader.on('end', this.onCompleteImport);
 
     try {
       await fileReader.read();
