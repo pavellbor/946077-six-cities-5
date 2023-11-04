@@ -1,0 +1,708 @@
+openapi: 3.0.0
+info:
+  title: API сервер для демо-проекта «Шесть городов».
+  description: |-
+    * Список ресурсов и маршрутов сервера «Шесть городов».
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  version: 2.0.0
+tags:
+  - name: offers
+    description: Действия с предложениями.
+  - name: users
+    description: Действия с пользователями.
+  - name: reviews
+    description: Действия с комментариями.
+
+paths:
+  /users/register:
+    post:
+      tags:
+        - users
+      summary: Регистрация пользователя
+      description: Регистрирует нового пользователя
+
+      requestBody:
+        description: Информация для создания нового пользователя
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createUser"
+        required: true
+
+      responses:
+        "201":
+          description: Пользователь зарегистрирован. Объект пользователя
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+
+        "400":
+          description: Входные данные не прошли валидацию
+
+        "409":
+          description: Пользователь с таким email уже существует
+
+  /users/login:
+    post:
+      tags:
+        - users
+      summary: Авторизация пользователя
+      description: Авторизация пользователя на основе логина и пароля
+
+      requestBody:
+        description: Информация для авторизации пользователя
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/authUser"
+        required: true
+
+      responses:
+        "200":
+          description: Пользователь авторизован. Объект пользователя
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+
+        "400":
+          description: Неправильный логин или пароль
+
+    get:
+      tags:
+        - users
+      summary: Проверка состояния пользователя
+      description: Возвращает информацию по авторизированному пользователю
+
+      responses:
+        "200":
+          description: Пользователь авторизован. Объект пользователя
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+
+        "401":
+          description: Пользователь не авторизован
+
+  /users/logout:
+    post:
+      tags:
+        - users
+      summary: Завершить сеанс пользователя
+      description: Завершает сеанс работы пользователя
+
+      requestBody:
+        content:
+          application/json: {}
+        required: false
+
+      responses:
+        "204":
+          description: Сеанс завершен.
+
+  /offers:
+    get:
+      tags:
+        - offers
+      summary: Получить список предложений
+      description: Возвращает список предложений. Каждое предложение описано в виде объекта.
+
+      responses:
+        "200":
+          description: Список предложений
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/offers"
+
+    post:
+      tags:
+        - offers
+      summary: Создать предложение
+      description: Создает новое предложение от авторизованного пользователя
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createOffer"
+        required: true
+
+      responses:
+        "201":
+          description: Предложение создано. Объект предложения
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/offer"
+
+        "400":
+          description: Входные данные не прошли валидацию
+
+        "401":
+          description: Создание предложения доступно только для авторизованных пользователей
+
+  /offers/favorite:
+    get:
+      tags:
+        - offers
+      summary: Получить список избранных предложений
+      description: Возвращает список предложений, добавленных в избранное.
+
+      responses:
+        "200":
+          description: Список предложений.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/offers"
+
+        "401":
+          description: Просмотр избранных предложений возможен только для зарегистрированных пользователей.
+
+  /offers/favorite/{offerId}:
+    parameters:
+      - name: offerId
+        in: path
+        schema:
+          type: string
+        required: true
+
+    post:
+      tags:
+        - offers
+      summary: Добавить предложение в избранное
+      description: Возвращает предложение с актуальным состоянием поля isFavorite.
+
+      responses:
+        "200":
+          description: Объект предложения.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/offer"
+
+        "400":
+          description: Ошибка тела запроса.
+
+        "401":
+          description: Пользователь не авторизован.
+
+        "404":
+          description: Предложение не найдено.
+
+        "409":
+          description: Приложение уже добавлено в избранное.
+
+    delete:
+      tags:
+        - offers
+      summary: Удаляет предложение в избранное
+      description: Возвращает предложение с актуальным состоянием поля isFavorite.
+
+      responses:
+        "200":
+          description: Объект предложения.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/offer"
+
+        "400":
+          description: Ошибка тела запроса.
+
+        "401":
+          description: Пользователь не авторизован.
+
+        "404":
+          description: Предложение не найдено.
+
+        "409":
+          description: Приложение уже добавлено в избранное.
+
+  /offers/${offerId}:
+    parameters:
+      - name: offerId
+        description: Идентификатор предложения
+        in: path
+        schema:
+          type: string
+          example: 65245ce712734e5eb67b7410
+        required: true
+
+    get:
+      tags:
+        - offers
+      summary: Получить предложение
+      description: Возвращает детальную информация по предложению
+
+      responses:
+        "200":
+          description: Предложение обновлено. Объект предложения
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/offer"
+
+        "404":
+          description: Запрашиваемое предложение не найдено
+
+    put:
+      tags:
+        - offers
+      summary: Редактировать предложение
+      description: Обновляет поля предложения. Действие доступно авторизованному автору предложения
+
+      requestBody:
+        description: Информация для обновления обновления
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/offer"
+
+      responses:
+        "200":
+          description: Предложение обновлено. Объект предложения
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/offer"
+
+        "400":
+          description: Входные данные не прошли валидацию
+
+        "401":
+          description: Обновление предложения доступно только для авторизованных пользователей
+
+    delete:
+      tags:
+        - offers
+      summary: Удалить предложение
+      description: Удаляет предложениe. Действие доступно авторизованному автору предложения
+
+      requestBody:
+        description: Информация для обновления обновления
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/offer"
+
+      responses:
+        "204":
+          description: Предложение удалено. Объект предложения
+
+        "401":
+          description: Удаление предложения доступно только для авторизованных пользователей
+
+        "404":
+          description: Предложение не найдено
+
+  /reviews/{offerId}:
+    get:
+      tags:
+        - reviews
+
+      summary: Получить список комментариев
+      description: Возвращает список комментариев для предложения с идентификатором offerId.
+
+      parameters:
+        - name: offerId
+          in: path
+          schema:
+            type: string
+          required: true
+
+      responses:
+        "200":
+          description: Массив комментариев.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/reviews"
+
+        "404":
+          description: Предложение не найдено
+
+    post:
+      tags:
+        - reviews
+
+      summary: Добавить новый комментарий
+      description: Добавляет новый комментарий для предложения с идентификатором offerId.
+
+      parameters:
+        - name: offerId
+          in: path
+          schema:
+            type: string
+          required: true
+
+      responses:
+        "201":
+          description: Объект с новым комментарием.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/review"
+
+        "400":
+          description: Ошибка тела запроса
+
+        "401":
+          description: Пользователь не авторизован
+
+        "404":
+          description: Предложение не найдено
+
+components:
+  schemas:
+    createUser:
+      type: object
+
+      properties:
+        email:
+          type: string
+          example: john@mail.ru
+
+        avatarUrl:
+          type: string
+          example: avatar.png
+
+        name:
+          type: string
+          example: john
+
+        type:
+          type: string
+          example: standart
+
+        password:
+          type: string
+          example: 123456
+
+    user:
+      type: object
+
+      properties:
+        id:
+          type: string
+          example: 6329c3d6a04ab1061c6425ea
+
+        email:
+          type: string
+          example: john@mail.ru
+
+        avatarUrl:
+          type: string
+          example: avatar.png
+
+        name:
+          type: string
+          example: john
+
+        type:
+          type: string
+          example: standart
+
+    authUser:
+      type: object
+
+      properties:
+        email:
+          type: string
+          example: joht@mail.ru
+
+        password:
+          type: string
+          example: 123456
+
+    createOffer:
+      type: object
+
+      properties:
+        title:
+          type: string
+          example: Nice, cozy, warm big bed apartment
+
+        description:
+          type: string
+          example: "I am happy to welcome you to my apartment in the city center! Three words: location, cosy and chic!"
+
+        postDate:
+          type: string
+          format: date-time
+          example: 2023-10-04T19:37:06.828Z
+
+        city:
+          type: string
+          example: Paris
+
+        previewImage:
+          type: string
+          example: preview.png
+
+        images:
+          type: array
+          example:
+            [
+              "image-9.jpg",
+              "image-8.jpg",
+              "image-5.jpg",
+              "image-6.jpg",
+              "image-7.jpg",
+              "image-12.jpg",
+            ]
+
+        isPremium:
+          type: boolean
+          example: true
+
+        isFavorite:
+          type: boolean
+          example: false
+
+        rating:
+          type: number
+          example: 3.2
+
+        type:
+          type: string
+          example: apartment
+
+        bedrooms:
+          type: number
+          example: 3
+
+        maxAdults:
+          type: number
+          example: 4
+
+        price:
+          type: number
+          example: 53000
+
+        goods:
+          type: array
+          example: ["Washer", "Towels", "Fridge"]
+
+        hostId:
+          type: string
+          example: 65245ce712734e5eb67b7410
+
+        location:
+          type: object
+
+          properties:
+            latitude:
+              type: number
+              example: 50.934361
+
+            longitude:
+              type: number
+              example: 6.943974
+
+        reviewCount:
+          type: number
+          example: 2
+
+    offer:
+      type: object
+
+      properties:
+        id:
+          type: string
+          example: 65245ce712734e5eb67b7410
+
+        title:
+          type: string
+          example: Nice, cozy, warm big bed apartment
+
+        description:
+          type: string
+          example: "I am happy to welcome you to my apartment in the city center! Three words: location, cosy and chic!"
+
+        postDate:
+          type: string
+          format: date-time
+          example: 2023-10-04T19:37:06.828Z
+
+        city:
+          type: string
+          example: Paris
+
+        previewImage:
+          type: string
+          example: preview.png
+
+        images:
+          type: array
+          example:
+            [
+              "image-9.jpg",
+              "image-8.jpg",
+              "image-5.jpg",
+              "image-6.jpg",
+              "image-7.jpg",
+              "image-12.jpg",
+            ]
+
+        isPremium:
+          type: boolean
+          example: true
+
+        isFavorite:
+          type: boolean
+          example: false
+
+        rating:
+          type: number
+          example: 3.2
+
+        type:
+          type: string
+          example: apartment
+
+        bedrooms:
+          type: number
+          example: 3
+
+        maxAdults:
+          type: number
+          example: 4
+
+        price:
+          type: number
+          example: 53000
+
+        goods:
+          type: array
+          example: ["Washer", "Towels", "Fridge"]
+
+        hostId:
+          type: string
+          example: 65245ce712734e5eb67b7410
+
+        location:
+          type: object
+
+          properties:
+            latitude:
+              type: number
+              example: 50.934361
+
+            longitude:
+              type: number
+              example: 6.943974
+
+        reviewCount:
+          type: number
+          example: 2
+
+    offers:
+      type: array
+      items:
+        type: object
+
+        properties:
+          id:
+            type: string
+            example: 65245ce712734e5eb67b7410
+
+          title:
+            type: string
+            example: Nice, cozy, warm big bed apartment
+
+          postDate:
+            type: string
+            format: date-time
+            example: 2023-10-04T19:37:06.828Z
+
+          city:
+            type: string
+            example: Paris
+
+          previewImage:
+            type: string
+            example: preview.png
+
+          isPremium:
+            type: boolean
+            example: true
+
+          isFavorite:
+            type: boolean
+            example: false
+
+          rating:
+            type: number
+            example: 3.2
+
+          type:
+            type: string
+            example: apartment
+
+          price:
+            type: number
+            example: 53000
+
+          hostId:
+            type: string
+            example: 65245ce712734e5eb67b7410
+
+          location:
+            type: object
+
+            properties:
+              latitude:
+                type: number
+                example: 50.934361
+
+              longitude:
+                type: number
+                example: 6.943974
+
+          reviewCount:
+            type: number
+            example: 2
+
+    reviews:
+      type: array
+
+      items:
+        type: object
+        properties:
+          text:
+            type: string
+            example: "We loved it so much, the house, the view, the location just great.. Highly recommend :)"
+          date:
+            type: string
+            format: date-time
+            example: 2023-10-04T19:37:06.828Z
+          rating:
+            type: number
+            example: 3.2
+          user:
+            type: string
+            example: 7911a1e0-b7f6-4c18-a83b-b1af7212fccc
+
+    review:
+      type: object
+
+      properties:
+        text:
+          type: string
+          example: "We loved it so much, the house, the view, the location just great.. Highly recommend :)"
+        date:
+          type: string
+          format: date-time
+          example: 2023-10-04T19:37:06.828Z
+        rating:
+          type: number
+          example: 3
+        user:
+          type: string
+          example: 7911a1e0-b7f6-4c18-a83b-b1af7212fccc
