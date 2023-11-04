@@ -1,10 +1,15 @@
 import { inject } from 'inversify';
 import { OfferService } from './offer-service.interface.js';
-import { Component } from '../../types/index.js';
+import { Component, SortType } from '../../types/index.js';
 import { Logger } from '../../libs/logger/index.js';
 import { DocumentType, types } from '@typegoose/typegoose';
 import { OfferEntity } from './offer.entity.js';
-import { CreateOfferDto } from './index.js';
+import {
+  CreateOfferDto,
+  DEFAULT_OFFER_COUNT,
+  PREMIUM_OFFER_MAX_COUNT,
+  UpdateOfferDto,
+} from './index.js';
 
 export class DefaultOfferService implements OfferService {
   constructor(
@@ -23,6 +28,53 @@ export class DefaultOfferService implements OfferService {
   public async findById(
     offerId: string
   ): Promise<DocumentType<OfferEntity> | null> {
-    return this.offerModel.findById(offerId).exec();
+    return this.offerModel.findById(offerId).populate(['hostId']).exec();
+  }
+
+  public async find(count?: number): Promise<DocumentType<OfferEntity>[]> {
+    const limit = count ?? DEFAULT_OFFER_COUNT;
+
+    return this.offerModel
+      .find()
+      .limit(limit)
+      .sort({ createdAt: SortType.Down })
+      .populate(['hostId'])
+      .exec();
+  }
+
+  public async deleteById(
+    offerId: string
+  ): Promise<DocumentType<OfferEntity> | null> {
+    return this.offerModel.findByIdAndDelete(offerId).exec();
+  }
+
+  public async updateById(
+    offerId: string,
+    dto: UpdateOfferDto
+  ): Promise<DocumentType<OfferEntity> | null> {
+    return this.offerModel
+      .findByIdAndUpdate(offerId, dto, { new: true })
+      .populate('hostId')
+      .exec();
+  }
+
+  public async findPremiumByCity(
+    city: string
+  ): Promise<DocumentType<OfferEntity>[]> {
+    return this.offerModel
+      .find({ city, isPremium: true })
+      .sort({ createdAt: SortType.Down })
+      .limit(PREMIUM_OFFER_MAX_COUNT)
+      .populate('hostId')
+      .exec();
+  }
+
+  public async findFavoriteByUserId(
+    userId: string
+  ): Promise<DocumentType<OfferEntity>[]> {
+    return this.offerModel
+      .find({ hostId: userId, isFavorite: true })
+      .populate('hostId')
+      .exec();
   }
 }
