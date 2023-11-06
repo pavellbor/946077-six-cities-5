@@ -37,12 +37,6 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   @prop()
   public isPremium: boolean;
 
-  @prop()
-  public isFavorite: boolean;
-
-  @prop()
-  public rating: number;
-
   @prop({
     type: String,
     enum: HousingType,
@@ -69,6 +63,15 @@ export class OfferEntity extends defaultClasses.TimeStamps {
 
   @prop({ type: Object })
   public location: Location;
+
+  @prop({ default: 0 })
+  public commentCount: number;
+
+  @prop({ default: 0 })
+  public rating: number;
+
+  @prop({ ref: () => UserEntity, default: [] })
+  public favoredByUsers: Ref<UserEntity>[];
 }
 
 export const OfferModel = getModelForClass(OfferEntity);

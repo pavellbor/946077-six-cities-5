@@ -4,13 +4,15 @@ import { Logger } from '../shared/libs/logger/index.js';
 import { Component } from '../shared/types/index.js';
 import { DatabaseClient } from '../shared/libs/database-client/index.js';
 import { getMongoURI } from '../shared/helpers/index.js';
+import { OfferService } from '../shared/modules/offer/index.js';
 
 @injectable()
 export class RestApplication {
   constructor(
     @inject(Component.Logger) private readonly logger: Logger,
     @inject(Component.Config) private readonly config: Config<RestSchema>,
-    @inject(Component.DatabaseClient) private readonly database: DatabaseClient
+    @inject(Component.DatabaseClient) private readonly database: DatabaseClient,
+    @inject(Component.OfferService) private readonly offerService: OfferService,
   ) {}
 
   private _initDb() {
@@ -32,5 +34,7 @@ export class RestApplication {
     this.logger.info('Init database...');
     await this._initDb();
     this.logger.info('Init database completed');
+    const result = await this.offerService.find();
+    console.log(result);
   }
 }
