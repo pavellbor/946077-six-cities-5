@@ -12,10 +12,6 @@ const IMAGES_COUNT = 6;
 const TRUE_VALUE = 1;
 const FALSE_VALUE = 0;
 
-const MIN_RATING = 1;
-const MAX_RATING = 5;
-const RATING_NUMS_AFTER_DIGIT = 1;
-
 const MIN_BEDROOMS_COUNT = 1;
 const MAX_BEDROOMS_COUNT = 8;
 
@@ -46,12 +42,6 @@ export class TSVOfferGenerator implements OfferGenerator {
     const previewImage = getRandomItem(this.mockData.previewImages);
     const images = getRandomItems(this.mockData.images, IMAGES_COUNT).join(';');
     const isPremium = getRandomItem([TRUE_VALUE, FALSE_VALUE]);
-    const isFavorite = getRandomItem([TRUE_VALUE, FALSE_VALUE]);
-    const rating = generateRandomValue(
-      MIN_RATING,
-      MAX_RATING,
-      RATING_NUMS_AFTER_DIGIT
-    );
     const type = getRandomItem(this.mockData.types);
     const bedrooms = generateRandomValue(
       MIN_BEDROOMS_COUNT,
@@ -88,8 +78,6 @@ export class TSVOfferGenerator implements OfferGenerator {
       previewImage,
       images,
       isPremium,
-      isFavorite,
-      rating,
       type,
       bedrooms,
       maxAdults,

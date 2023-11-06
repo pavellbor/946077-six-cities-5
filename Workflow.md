@@ -74,6 +74,18 @@ npm run mock:server
 
 Сервер возвращает набор моковых данных для команды `--generate`
 
+#### Запустить генерацию моковых данных
+
+```bash
+npm run ts ./src/main.cli.ts -- --generate 100 ./mocks/mock-data.tsv http://localhost:3123/api                                                                                                                                                                                                                                         
+```
+
+#### Наполнить базу моковыми данными
+
+```bash
+npm run ts ./src/main.cli.ts -- --import ./mocks/mock-data.tsv admin test 127.0.0.1 six-cities secret                                                                                                                                                                                                                                         
+```
+
 ## Структура проекта
 
 ### Директория `src`
