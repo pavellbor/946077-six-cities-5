@@ -12,4 +12,5 @@ export interface OfferService {
   ): Promise<DocumentType<OfferEntity> | null>;
   findPremiumByCity(city: string): Promise<DocumentType<OfferEntity>[]>;
   findFavoriteByUserId(userId: string): Promise<DocumentType<OfferEntity>[]>;
+  exists(offerId: string): Promise<boolean>;
 }

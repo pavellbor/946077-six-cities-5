@@ -168,4 +168,9 @@ export class DefaultOfferService implements OfferService {
       ])
       .exec();
   }
+
+  public async exists(offerId: string): Promise<boolean> {
+    const result = await this.findById(offerId);
+    return !!result;
+  }
 }
