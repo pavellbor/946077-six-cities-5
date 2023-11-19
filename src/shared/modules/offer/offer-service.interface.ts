@@ -3,7 +3,7 @@ import { CreateOfferDto, OfferEntity, UpdateOfferDto } from './index.js';
 
 export interface OfferService {
   create(dto: CreateOfferDto): Promise<DocumentType<OfferEntity>>;
-  find(): Promise<DocumentType<OfferEntity>[]>;
+  find(count?: number): Promise<DocumentType<OfferEntity>[]>;
   findById(offerId: string): Promise<DocumentType<OfferEntity> | null>;
   deleteById(offerId: string): Promise<DocumentType<OfferEntity> | null>;
   updateById(

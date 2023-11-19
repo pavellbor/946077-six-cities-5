@@ -46,7 +46,3 @@ export function createErrorObject(message: string) {
     error: message,
   };
 }
-
-export function parseAsString(param: unknown): string | null {
-  return typeof param === 'string' ? param : null;
-}

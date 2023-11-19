@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { OfferService } from './offer-service.interface.js';
-import { Component, SortType } from '../../types/index.js';
+import { City, Component, SortType } from '../../types/index.js';
 import { Logger } from '../../libs/logger/index.js';
 import { DocumentType, types } from '@typegoose/typegoose';
 import { OfferEntity } from './offer.entity.js';
@@ -10,6 +10,8 @@ import {
   PREMIUM_OFFER_MAX_COUNT,
   UpdateOfferDto,
 } from './index.js';
+import { HttpError } from '../../libs/rest/index.js';
+import { StatusCodes } from 'http-status-codes';
 
 const commentCountAndRatingPipline = () => [
   {
@@ -106,7 +108,7 @@ export class DefaultOfferService implements OfferService {
         ...commentCountAndRatingPipline(),
         ...hostPipline(),
         ...favoritesPipeline(),
-        { $limit: limit },
+        { $limit: +limit },
         { $sort: { createdAt: SortType.Down } },
       ])
       .exec();
@@ -133,6 +135,18 @@ export class DefaultOfferService implements OfferService {
   public async findPremiumByCity(
     city: string
   ): Promise<DocumentType<OfferEntity>[]> {
+    const isCityExists = Object.values(City).find(
+      (x) => x.toLocaleLowerCase() === city.toLocaleLowerCase()
+    );
+
+    if (!isCityExists) {
+      throw new HttpError(
+        StatusCodes.BAD_REQUEST,
+        `City with name ${city} not found.`,
+        'OfferController'
+      );
+    }
+
     return this.offerModel
       .aggregate([
         {
