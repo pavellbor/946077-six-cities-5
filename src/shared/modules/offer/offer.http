@@ -71,3 +71,8 @@ DELETE  http://localhost:3000/offers/65511b334f34179d36288016 HTTP/1.1
 Content-Type: application/json
 
 ###
+
+## Список комментариев к объявлению
+GET http://localhost:3000/offers/654948f643d8be512e7617d5/comments HTTP/1.1
+
+###

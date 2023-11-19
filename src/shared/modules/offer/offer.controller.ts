@@ -17,12 +17,16 @@ import { OfferPreviewRdo } from './rdo/offer-preview.rdo.js';
 import { ParamOfferId } from './type/param-offerid.type.js';
 import { ParamCity } from './type/param-city.type.ts.js';
 import { RequestQuery } from '../../libs/rest/types/request-query.type.js';
+import { CommentService } from '../comment/index.js';
+import { CommentRdo } from '../comment/rdo/comment.rdo.js';
 
 @injectable()
 export class OfferController extends BaseController {
   constructor(
     @inject(Component.Logger) protected readonly logger: Logger,
-    @inject(Component.OfferService) private readonly offerService: OfferService
+    @inject(Component.OfferService) private readonly offerService: OfferService,
+    @inject(Component.CommentService)
+    private readonly commentService: CommentService
   ) {
     super(logger);
 
@@ -59,6 +63,11 @@ export class OfferController extends BaseController {
       path: '/:offerId/favorite',
       method: HttpMethod.Put,
       handler: this.favorite,
+    });
+    this.addRoute({
+      path: '/:offerId/comments',
+      method: HttpMethod.Get,
+      handler: this.getComments,
     });
   }
 
@@ -151,6 +160,8 @@ export class OfferController extends BaseController {
       );
     }
 
+    await this.commentService.deleteByOfferId(offerId);
+
     this.noContent(res, fillDTO(OfferRdo, deletedOffer));
   }
 
@@ -160,5 +171,21 @@ export class OfferController extends BaseController {
       'Not implemented',
       'OfferController'
     );
+  }
+
+  public async getComments(
+    { params }: Request<ParamOfferId>,
+    res: Response
+  ): Promise<void> {
+    if (!(await this.offerService.exists(params.offerId))) {
+      throw new HttpError(
+        StatusCodes.NOT_FOUND,
+        `Offer with id ${params.offerId} not found.`,
+        'OfferController'
+      );
+    }
+
+    const comments = await this.commentService.findByOfferId(params.offerId);
+    this.ok(res, fillDTO(CommentRdo, comments));
   }
 }
