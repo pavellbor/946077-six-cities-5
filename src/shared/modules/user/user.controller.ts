@@ -15,6 +15,7 @@ import { Config, RestSchema } from '../../libs/config/index.js';
 import { fillDTO } from '../../helpers/index.js';
 import { UserRdo } from './rdo/user.rdo.js';
 import { LoginUserRequest } from './login-user-request.type.js';
+import { LoginUserDto } from './dto/login-user.dto.js';
 
 @injectable()
 export class UserController extends BaseController {
@@ -43,6 +44,7 @@ export class UserController extends BaseController {
       path: '/login',
       method: HttpMethod.Get,
       handler: this.checkToken,
+      middlewares: [new ValidateDtoMiddleware(LoginUserDto)],
     });
     this.addRoute({
       path: '/logout',
