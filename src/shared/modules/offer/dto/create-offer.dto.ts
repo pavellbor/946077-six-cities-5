@@ -18,7 +18,7 @@ import {
   HousingType,
   Location,
 } from '../../../types/index.js';
-import { CreateOfferValidationMessage } from './create-offer-validation-message.js';
+import { CreateOfferValidationMessage } from './create-offer.messages.js';
 
 export class CreateOfferDto {
   @MinLength(10, { message: CreateOfferValidationMessage.title.minLength })
