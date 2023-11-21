@@ -3,6 +3,7 @@ import {
   BaseController,
   HttpError,
   HttpMethod,
+  ValidateDtoMiddleware,
   ValidateObjectIdMiddleware,
 } from '../../libs/rest/index.js';
 import { Component } from '../../types/index.js';
@@ -20,6 +21,7 @@ import { ParamCity } from './type/param-city.type.ts.js';
 import { RequestQuery } from '../../libs/rest/types/request-query.type.js';
 import { CommentService } from '../comment/index.js';
 import { CommentRdo } from '../comment/rdo/comment.rdo.js';
+import { CreateOfferDto } from './index.js';
 
 @injectable()
 export class OfferController extends BaseController {
@@ -34,7 +36,7 @@ export class OfferController extends BaseController {
     this.logger.info('Register routes for OfferController...');
 
     this.addRoute({ path: '/', method: HttpMethod.Get, handler: this.index });
-    this.addRoute({ path: '/', method: HttpMethod.Post, handler: this.create });
+    this.addRoute({ path: '/', method: HttpMethod.Post, handler: this.create, middlewares: [new ValidateDtoMiddleware(CreateOfferDto)] });
     this.addRoute({
       path: '/premium/:city',
       method: HttpMethod.Get,
