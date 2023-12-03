@@ -164,11 +164,10 @@ export class OfferController extends BaseController {
   ): Promise<void> {
     const { offerId } = params;
 
-    const deletedOffer = await this.offerService.deleteById(offerId);
-
+    await this.offerService.deleteById(offerId);
     await this.commentService.deleteByOfferId(offerId);
 
-    this.noContent(res, fillDTO(OfferRdo, deletedOffer));
+    this.noContent(res, null);
   }
 
   public async favorite(_req: Request, _res: Response): Promise<void> {

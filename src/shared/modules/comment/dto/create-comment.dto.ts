@@ -1,6 +1,6 @@
 import {
+  IsInt,
   IsMongoId,
-  IsNumber,
   IsString,
   Length,
   Max,
@@ -13,7 +13,7 @@ export class CreateCommentDto {
   @Length(5, 1024, { message: CreateCommentMessages.text.lengthField })
   public text: string;
 
-  @IsNumber({}, { message: CreateCommentMessages.rating.invalidFormat })
+  @IsInt({ message: CreateCommentMessages.rating.invalidFormat })
   @Min(1, { message: CreateCommentMessages.rating.minValue })
   @Max(5, { message: CreateCommentMessages.rating.maxValue })
   public rating: number;

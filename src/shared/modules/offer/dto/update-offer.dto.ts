@@ -11,6 +11,7 @@ import {
   MaxLength,
   Min,
   MinLength,
+  ValidateNested,
 } from 'class-validator';
 import {
   City,
@@ -19,6 +20,8 @@ import {
   Location,
 } from '../../../types/index.js';
 import { CreateUpdateOfferMessage } from './update-offer.messages.js';
+import { CoordinatesDto } from './coordinates.dto.js';
+import { Type } from 'class-transformer';
 
 export class UpdateOfferDto {
   @IsOptional()
@@ -86,8 +89,14 @@ export class UpdateOfferDto {
 
   @IsOptional()
   @IsArray({ message: CreateUpdateOfferMessage.goods.invalidFormat })
+  @IsEnum(GoodsType, {
+    each: true,
+    message: CreateUpdateOfferMessage.goods.invalidFormat,
+  })
   public goods?: GoodsType[];
 
   @IsOptional()
+  @ValidateNested()
+  @Type(() => CoordinatesDto)
   public location?: Location;
 }

@@ -42,6 +42,8 @@ export const CreateUpdateOfferMessage = {
   },
   goods: {
     invalidFormat: 'goods must be a valid array',
+    invalid:
+      'Must be Breakfast, Air conditioning, Laptop friendly workspace, Baby seat, Washer, Towels, Fridge',
   },
   hostId: {
     invalidId: 'hostId field must be a valid id',

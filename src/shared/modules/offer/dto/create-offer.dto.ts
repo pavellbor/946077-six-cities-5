@@ -11,6 +11,7 @@ import {
   MaxLength,
   Min,
   MinLength,
+  ValidateNested,
 } from 'class-validator';
 import {
   City,
@@ -19,6 +20,8 @@ import {
   Location,
 } from '../../../types/index.js';
 import { CreateOfferValidationMessage } from './create-offer.messages.js';
+import { CoordinatesDto } from './coordinates.dto.js';
+import { Type } from 'class-transformer';
 
 export class CreateOfferDto {
   @MinLength(10, { message: CreateOfferValidationMessage.title.minLength })
@@ -74,10 +77,16 @@ export class CreateOfferDto {
   public price: number;
 
   @IsArray({ message: CreateOfferValidationMessage.goods.invalidFormat })
+  @IsEnum(GoodsType, {
+    each: true,
+    message: CreateOfferValidationMessage.goods.invalid,
+  })
   public goods: GoodsType[];
 
   @IsMongoId({ message: CreateOfferValidationMessage.hostId.invalidId })
   public hostId: string;
 
+  @ValidateNested()
+  @Type(() => CoordinatesDto)
   public location: Location;
 }
