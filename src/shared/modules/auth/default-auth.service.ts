@@ -5,7 +5,7 @@ import { Component } from '../../types/index.js';
 import { UserEntity, UserService } from '../user/index.js';
 import { Config, RestSchema } from '../../libs/config/index.js';
 import * as crypto from 'node:crypto';
-import { TokenPayload } from './token-payload.type.js';
+import { TokenPayload } from './types/token-payload.type.js';
 import { SignJWT } from 'jose';
 import { JWT_ALGORITHM, JWT_EXPIRED } from './auth.constant.js';
 import { LoginUserDto } from '../user/dto/login-user.dto.js';
