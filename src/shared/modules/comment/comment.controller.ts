@@ -35,7 +35,7 @@ export class CommentController extends BaseController {
     });
   }
 
-  async create({ body }: CreateCommentRequest, res: Response): Promise<void> {
+  async create({ body, tokenPayload }: CreateCommentRequest, res: Response): Promise<void> {
     if (!(await this.offerService.exists(body.offerId))) {
       throw new HttpError(
         StatusCodes.NOT_FOUND,
@@ -44,7 +44,7 @@ export class CommentController extends BaseController {
       );
     }
 
-    const comment = await this.commentService.create(body);
+    const comment = await this.commentService.create({...body, userId: tokenPayload.id  });
     this.created(res, fillDTO(CommentRdo, comment));
   }
 }
