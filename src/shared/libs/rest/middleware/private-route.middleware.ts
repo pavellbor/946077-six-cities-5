@@ -17,6 +17,6 @@ export class PrivateRouteMiddleware implements Middleware {
       );
     }
 
-    return next();
+    next();
   }
 }

@@ -41,6 +41,7 @@ export class ParseTokenMiddleware implements Middleware {
       );
       if (isTokenPayload(payload)) {
         req.tokenPayload = { ...payload };
+        return next();
       }
     } catch {
       return next(
