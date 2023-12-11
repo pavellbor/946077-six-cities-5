@@ -6,7 +6,6 @@ import {
   IsDateString,
   IsEnum,
   IsInt,
-  IsMongoId,
   Max,
   MaxLength,
   Min,
