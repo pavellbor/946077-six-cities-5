@@ -117,10 +117,13 @@ export class OfferController extends BaseController {
   }
 
   public async create(
-    { body }: CreateOfferRequest,
+    { body, tokenPayload }: CreateOfferRequest,
     res: Response
   ): Promise<void> {
-    const offer = await this.offerService.create(body);
+    const offer = await this.offerService.create({
+      ...body,
+      hostId: tokenPayload.id,
+    });
     const responseData = fillDTO(OfferRdo, offer);
     this.ok(res, responseData);
   }

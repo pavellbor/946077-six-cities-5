@@ -83,7 +83,6 @@ export class CreateOfferDto {
   })
   public goods: GoodsType[];
 
-  @IsMongoId({ message: CreateOfferValidationMessage.hostId.invalidId })
   public hostId: string;
 
   @ValidateNested()
